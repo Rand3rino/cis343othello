@@ -8,8 +8,10 @@
 #include "othello.h"
 bool isOnBoard(int r, int c);
 
-
+//*********************************************************************
 // Displays the board (as SIZE x SIZE grid) on console
+// @param board memory address to "board" 
+//********************************************************************
 void displayBoard(char board[][SIZE])
 {
 	printf("\n");
@@ -28,7 +30,10 @@ void displayBoard(char board[][SIZE])
 	printf("\n");
 }
 
-// Initializes the board with start configuration of discs (see project specs)
+//*********************************************************************
+//Initializes the board with start configuration of discs
+// @param board memory address to "board"
+//*********************************************************************
 void initializeBoard(char board[][SIZE])
 {
 	// Assign each board space as empty.
@@ -37,14 +42,23 @@ void initializeBoard(char board[][SIZE])
 			board[i][j] = '-';
 
 	// Assign diagonal spaces to each player.
-	board[3][3] = 'W';
-	board[4][4] = 'W';
-	board[3][4] = 'B';
-	board[4][3] = 'B';
+	board[3][3] = 'B';
+	board[4][4] = 'B';
+	board[3][4] = 'W';
+	board[4][3] = 'W';
 	return;
 }
 
-// Returns true if moving the disc to location row,col is valid; else returns false
+//*********************************************************************
+// Determine if a move is valid.
+//
+// @param board memory address to "board"
+// @param row move row location
+// @param col move column location
+// @param disc the color of the disc
+// @return true if moving the disc to location row, col is valid
+// @return false moving a disc to location row, col is not valid
+//*********************************************************************
 bool isValidMove(char board[][SIZE], int row, int col, char disc)
 {
 	// Check if move is on the board
@@ -112,7 +126,13 @@ bool isValidMove(char board[][SIZE], int row, int col, char disc)
 	return false;
 }
 
+//*********************************************************************
 // HELPER FUNCTION: Checks if a move is on the board.
+// @param r row location
+// @param c column location
+// @return true move is on the board
+// @return false move is not on the board
+//*********************************************************************
 bool isOnBoard(int r, int c) 
 {
 	if (r >= SIZE || r < 0)
@@ -122,7 +142,13 @@ bool isOnBoard(int r, int c)
 	return true;
 }
 
-// Places the disc at location row,col and flips the opponent discs as needed
+//*********************************************************************
+// Places the disc at location row,col and flips discs as needed
+// @param board memory address to "board"
+// @param row row location
+// @param col column location
+// @param disc the color of the disc
+//*********************************************************************
 void placeDiscAt(char board[][SIZE], int row, int col, char disc)
 {
 	int tempR, tempC;
@@ -165,7 +191,12 @@ void placeDiscAt(char board[][SIZE], int row, int col, char disc)
 		board[permR][permC] = disc;
 }
 
-// Returns true if a valid move for disc is available; else returns false
+//*********************************************************************
+// Checks the board to see if player can make a move
+// @param board memory address to "board"
+// @param disc the color of the disc
+// @return true if player can make a move; false otherwise
+//*********************************************************************
 bool isValidMoveAvailable(char board[][SIZE], char disc)
 {
 	// Look at empty spaces for valid moves.
@@ -178,7 +209,11 @@ bool isValidMoveAvailable(char board[][SIZE], char disc)
 	return false;
 }
 
-// Returns true if the board is fully occupied with discs; else returns false
+//*********************************************************************
+// Checks if the board is full
+// @param board memory address to "board"
+// @return true if the board is full with discs; false otherwise
+//*********************************************************************
 bool isBoardFull(char board[][SIZE])
 {
 	// Stores the number of dashes on the board.
@@ -198,7 +233,12 @@ bool isBoardFull(char board[][SIZE])
 	return false;
 }
 
-// Returns true if either the board is full or a valid move is not available for either disc
+//*********************************************************************
+// Checks if the game is over
+// @param board memory address to "board"
+// @return true either board is full 
+//  or a valid move is not available for either disc; false otherwise
+//*********************************************************************
 bool isGameOver(char board[][SIZE])
 {
 	if(isBoardFull(board) || (isValidMoveAvailable(board, 'B') == false
@@ -208,8 +248,12 @@ bool isGameOver(char board[][SIZE])
 	return false;
 }
 
-// If there is a winner, it returns the disc (BLACK or WHITE) associated with the winner.
-// In case of a tie, it returns EMPTY
+//*********************************************************************
+// Checks which playerr is the winner
+// @param board memory address to "board"
+// @return disc  (BLACK or WHITE) associated with the winner.
+// @return EMPTY in case of tie.
+//*********************************************************************
 char checkWinner(char board[][SIZE])
 {	
 	// Store the number of white and black chips separately.
